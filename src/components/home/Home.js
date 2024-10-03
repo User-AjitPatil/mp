@@ -12,7 +12,7 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2  md:gap-4  place-items-start lg:place-items-center">
                 
                 <div className="flex  flex-col items-center max-w-2xl ">
-                    <h1 className="flex text-6xl text-blue-700 font-extrabold mb-6 lg:mb-10">
+                    <h1 className="flex text-6xl text-green-700 font-extrabold mb-6 lg:mb-10">
                     Welcome to Exam Portal
                     </h1>
                     <p className="text-base text-gray-500">Exams Portal is a software solution enabling medical 
