@@ -16,6 +16,9 @@ import StudentsData from './dashboard/StudentsData';
 import NotesPage from "./dashboard/NotesPage";
 import TopicPage from './dashboard/TopicPage';
 import CreateTest from './examsection/CreateTest';
+import StudentNotes from './dashboard/StudentNotes';
+import StudentSubjects from './dashboard/StudentSubjects';
+import StudentTopics from './dashboard/StudentTopics';
 function App() {
   const [type, setType] = useState(null);
   return (
@@ -34,6 +37,9 @@ function App() {
         <Route path="/subjects/topics/:subject" element={<TopicPage />} />
         <Route path="/subjects/notes/:subject/:topic" element={<NotesPage />} />
         <Route path="/createtest" element={<CreateTest />} />
+        <Route path="/studentsubjects" element={<StudentSubjects />} />
+        <Route path="/topics/:subjectId" element={<StudentTopics />} />
+        <Route path="/notes/:topic" element={<StudentNotes />} />
       </Routes>
     </BrowserRouter>
   </div>
