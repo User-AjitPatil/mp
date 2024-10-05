@@ -9,16 +9,16 @@ const Sidebar = ({ isOpen, toggleSidebar}) => {
                 Close
             </button> */}
             <ul className="mt-4">
-                <li className="p-4 hover:bg-blue-100">
+            <li className="p-4 hover:bg-blue-500 text-white">
                     <Link to="/dashboard" onClick={toggleSidebar}>Dashboard</Link>
                 </li>
-                <li className="p-4 hover:bg-blue-100">
+                <li className="p-4 hover:bg-blue-500 text-white">
                     <Link to="/profile" onClick={toggleSidebar}>Profile</Link>
                 </li>
-                <li className="p-4 hover:bg-blue-100">
+                <li className="p-4 hover:bg-blue-500 text-white">
                     <Link to="/exam" onClick={toggleSidebar}>Exams</Link>
                 </li>
-                <li className="p-4 hover:bg-blue-100">
+                <li className="p-4 hover:bg-blue-500 text-white">
                     <Link to="/login" onClick={toggleSidebar}>Logout</Link>
                 </li>
             </ul>

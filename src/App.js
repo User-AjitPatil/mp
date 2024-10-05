@@ -15,6 +15,7 @@ import AdminExamHandler from './examsection/AdminExamHandler';
 import StudentsData from './dashboard/StudentsData';
 import NotesPage from "./dashboard/NotesPage";
 import TopicPage from './dashboard/TopicPage';
+import CreateTest from './examsection/CreateTest';
 function App() {
   const [type, setType] = useState(null);
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='/studentsdata' element={<StudentsData />} />
         <Route path="/subjects/topics/:subject" element={<TopicPage />} />
         <Route path="/subjects/notes/:subject/:topic" element={<NotesPage />} />
+        <Route path="/createtest" element={<CreateTest />} />
       </Routes>
     </BrowserRouter>
   </div>
