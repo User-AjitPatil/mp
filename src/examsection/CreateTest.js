@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const CreateTest = () => {
     const [testName, setTestName] = useState('');
+    const [subject, setSubject] = useState('');
     const [questions, setQuestions] = useState([
         { question: '', options: ['', '', '', ''], correctAnswerIndex: 0 }
     ]);
@@ -9,6 +11,11 @@ const CreateTest = () => {
     // Handle input changes for test name
     const handleTestNameChange = (e) => {
         setTestName(e.target.value);
+    };
+
+    // Handle input changes for subject
+    const handleSubjectChange = (e) => {
+        setSubject(e.target.value);
     };
 
     // Handle question change
@@ -44,14 +51,25 @@ const CreateTest = () => {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();  // Prevent page refresh
-        const testData = {
-            testName,
-            questions
-        };
-        console.log('Test Data:', testData);
-        // Here you can send testData to your backend or process further
+        const testData = { name: testName, subject, questions };  // Updated to match backend format
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/tests/createTest', testData);
+            
+            if (response.status !== 201) throw new Error('Failed to create test');
+        
+            const result = response.data;
+            console.log('Created Test:', result);
+            
+            // Reset the form or provide feedback as required
+            setTestName('');
+            setSubject('');
+            setQuestions([{ question: '', options: ['', '', '', ''], correctAnswerIndex: 0 }]);
+        } catch (error) {
+            console.error('Error creating test:', error);
+        }
     };
 
     return (
@@ -66,6 +84,19 @@ const CreateTest = () => {
                     id="testName"
                     value={testName}
                     onChange={handleTestNameChange}
+                    className="border border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                />
+            </div>
+
+            {/* Subject Input */}
+            <div className="mb-6">
+                <label className="block mb-2 text-gray-600" htmlFor="subject">Subject:</label>
+                <input
+                    type="text"
+                    id="subject"
+                    value={subject}
+                    onChange={handleSubjectChange}
                     className="border border-gray-300 p-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                 />
@@ -158,6 +189,3 @@ const CreateTest = () => {
 };
 
 export default CreateTest;
-
-
-
