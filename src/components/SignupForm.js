@@ -1,21 +1,18 @@
-
-
-// src/components/SignupForm.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignupForm = ({ setType }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        mobileNo: "",
+        firstname: "",
+        lastname: "",
+        Mobile_NO: "",
         username: "",
         email: "",
         password: "",
         confirmPassword: "",
         userType: "student",
-        prnNumber: "", // Added PRN number field
+        PRN: "", // Added PRN number field
     });
 
     const [errors, setErrors] = useState({}); // To hold validation error messages
@@ -27,28 +24,26 @@ const SignupForm = ({ setType }) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const validateMobileNo = (mobileNo) => {
+    const validateMobileNo = (Mobile_NO) => {
         const regex = /^\+?\d{10,15}$/; // Adjust length as necessary
-        return regex.test(mobileNo);
+        return regex.test(Mobile_NO);
     };
 
     const validatePassword = (password) => {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{5,}$/; // At least 5 chars: 1 uppercase, 1 lowercase, 1 digit, 1 special character
-        return regex.test(password);
+        return password.length >= 6; // Only check for a minimum length of 6 characters
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSignup = async () => {
         let formErrors = {};
 
         // Mobile number validation
-        if (!validateMobileNo(formData.mobileNo)) {
-            formErrors.mobileNo = "Invalid mobile number format.";
+        if (!validateMobileNo(formData.Mobile_NO)) {
+            formErrors.Mobile_NO = "Invalid mobile number format.";
         }
 
         // Password validation
         if (!validatePassword(formData.password)) {
-            formErrors.password = "Password must be at least 5 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+            formErrors.password = "Password must be at least 6 characters long.";
         }
 
         if (formData.password !== formData.confirmPassword) {
@@ -56,8 +51,8 @@ const SignupForm = ({ setType }) => {
         }
 
         // PRN number validation for students
-        if (formData.userType === "student" && !formData.prnNumber) {
-            formErrors.prnNumber = "PRN number is required for students.";
+        if (formData.userType === "student" && !formData.PRN) {
+            formErrors.PRN = "PRN number is required for students.";
         }
 
         if (Object.keys(formErrors).length > 0) {
@@ -65,19 +60,41 @@ const SignupForm = ({ setType }) => {
             return;
         }
 
-        // If there are no errors, proceed with submission
-        setType(formData.userType);
-        navigate("/login");
-        console.log("Form Submitted", formData);
+        // If there are no errors, proceed with API submission
+        const endpoint = formData.userType === "student" 
+            ? "http://localhost:4000/api/v1/student/auth/signup" 
+            : "http://localhost:4000/api/v1/admin/auth/signup";
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error("Signup failed.");
+            }
+
+            setType(formData.userType);
+            navigate("/login");
+            console.log("Form Submitted", data);
+        } catch (error) {
+            console.error("Error:", error);
+            setErrors({ submit: "Signup failed. Please try again." });
+        }
     };
 
     return (
         <div className="h-screen flex items-center justify-center bg-gray-100 mt-10">
             <div className="bg-white p-8 rounded shadow-md w-96">
                 <h1 className="text-5xl flex justify-center items-center text-blue-700 font-bold mb-6">Signup</h1>
-                <form onSubmit={handleSubmit} className="max-w-md w-full">
+                <div className="max-w-md w-full">
                     {/* Input fields */}
-                    {["firstName", "lastName", "mobileNo", "username", "email"].map((field, index) => (
+                    {["firstname", "lastname", "Mobile_NO", "username", "email"].map((field, index) => (
                         <div className="mb-4" key={index}>
                             <input
                                 type="text"
@@ -127,14 +144,14 @@ const SignupForm = ({ setType }) => {
                         <div className="mb-4">
                             <input
                                 type="text"
-                                name="prnNumber"
+                                name="PRN"
                                 placeholder="PRN Number"
-                                value={formData.prnNumber}
+                                value={formData.PRN}
                                 onChange={handleChange}
-                                className={`w-full p-2 border rounded ${errors.prnNumber ? 'border-red-500' : ''}`}
-                                required // Making it required
+                                className={`w-full p-2 border rounded ${errors.PRN ? 'border-red-500' : ''}`}
+                                required
                             />
-                            {errors.prnNumber && <div className="text-red-500">{errors.prnNumber}</div>}
+                            {errors.PRN && <div className="text-red-500">{errors.PRN}</div>}
                         </div>
                     )}
 
@@ -153,7 +170,11 @@ const SignupForm = ({ setType }) => {
                         </label>
                     </div>
                     <div className="mb-4">
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button 
+                            type="button" // Keep as button type
+                            onClick={handleSignup} // OnClick handler
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
                             Signup
                         </button>
                     </div>
@@ -168,7 +189,7 @@ const SignupForm = ({ setType }) => {
                             </span>
                         </p>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );

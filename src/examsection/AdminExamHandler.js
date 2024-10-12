@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../dashboard/Sidebar';
 import { FaBars } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminExamHandler = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [createdTests, setCreatedTests] = useState([]);
-    const [recentAttempts, setRecentAttempts] = useState([]);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -17,39 +16,28 @@ const AdminExamHandler = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [testResponse, attemptResponse] = await Promise.all([
-                    fetch('http://localhost:5000/api/tests/getAllTests'),
-                    fetch('http://localhost:5000/api/recent-attempts/getRecentAttempts')
-                ]);
+                const token = localStorage.getItem('token');
+                const testResponse = await fetch('http://localhost:4000/api/v1/admin/routes/get-tests', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (!testResponse.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+
                 const dataTests = await testResponse.json();
-                const dataAttempts = await attemptResponse.json();
-                setCreatedTests(dataTests);
-                setRecentAttempts(dataAttempts);
+                setCreatedTests(dataTests.tests);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                navigate('/login');
             }
         };
+
         fetchData();
-    }, []);
+    }, [navigate]);
 
-    const createNewTest = async () => {
-        try {
-            const testData = { name: "New Test" };  // Replace with relevant test data
-            const response = await fetch('/api/create-test', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(testData)
-            });
-
-            if (response.ok) {
-                const newTest = await response.json();
-                setCreatedTests(prev => [...prev, newTest]);
-            } else {
-                console.error('Error creating new test');
-            }
-        } catch (error) {
-            console.error('Error creating new test:', error);
-        }
+    const handleTestClick = (testId) => {
+        navigate(`/test-details/${testId}`); // Navigate to the new TestDetails page
     };
 
     return (
@@ -62,8 +50,12 @@ const AdminExamHandler = () => {
                     <div className="mt-4">
                         {createdTests.length > 0 ? (
                             createdTests.map(test => (
-                                <div key={test.id} className="bg-gray-200 p-2 mb-2 rounded">
-                                    <p>Test Name: {test.name}</p>
+                                <div 
+                                    key={test._id} 
+                                    className="bg-gray-200 p-2 mb-2 rounded cursor-pointer hover:bg-gray-300"
+                                    onClick={() => handleTestClick(test._id)} // Handle click to navigate
+                                >
+                                    <p>Test Name: {test.title}</p>
                                     <p>Date Created: {new Date(test.createdAt).toLocaleString()}</p>
                                 </div>
                             ))
@@ -71,27 +63,14 @@ const AdminExamHandler = () => {
                             <p>No tests created yet.</p>
                         )}
                     </div>
-                    <div className="mt-4">
-                        {recentAttempts.length > 0 ? (
-                            recentAttempts.map(attempt => (
-                                <div key={attempt.rollNo} className="bg-gray-200 p-2 mb-2 rounded">
-                                    <p>Roll No: {attempt.rollNo}</p>
-                                    <p>Marks Scored: {attempt.marks}</p>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No recent attempts available.</p>
-                        )}
-                    </div>
 
                     <div className="flex justify-center space-x-6 mt-4">
                         <Link to="/createtest">
                             <button 
-                                onClick={createNewTest}
                                 className="bg-blue-500 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded shadow-lg transition-transform transform hover:scale-105">
                                 Create Test
                             </button>
-                            </Link>
+                        </Link>
                     </div>
                 </div>
             </div>

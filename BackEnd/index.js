@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dbConnect = require("./config/database");
 const app = express();
-const testRoutes = require('./routes/testRoutes');
-const attemptRoutes = require('./routes/attemptRoutes');
+// const testRoutes = require('./routes/testRoutes');
+// const attemptRoutes = require('./routes/attemptRoutes');
+const Router = require('./routes/Router')
 require('dotenv').config();
 
 // Middleware
@@ -17,9 +18,7 @@ const PORT = process.env.PORT || 4000;
 
 // CORS Configuration
 app.use(
-  cors({
-    origin: "*",
-  })
+  cors()
 );
 
 // Connecting to the database
@@ -32,11 +31,12 @@ app.get("/", (req, res) => {
 
 // Route configurations
 console.log("hello");
-app.use('/api/tests', testRoutes);
-app.use('/api/recent-attempts', attemptRoutes);
+// app.use('/api/tests', testRoutes);
+// app.use('/api/recent-attempts', attemptRoutes);
+app.use('/api/v1',Router);
 
 
 // Start the server
-app.listen(PORT, () => {
+app.listen(4000, () => {
   console.log(`Server is running on port ${PORT}`);
 });

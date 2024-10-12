@@ -7,4 +7,14 @@ const attemptSchema = new mongoose.Schema({
     test: { type: mongoose.Schema.Types.ObjectId, ref: 'Test', required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Attempt', attemptSchema);
+const submission_Schema = new mongoose.Schema({
+    student_id: { type: mongoose.Schema.Types.ObjectId, ref: 'student', required: true },
+    test_id: { type: mongoose.Schema.Types.ObjectId, ref: 'test', required: true },
+    marks: { type: Number, required: true },
+    submitted_at: { type: Date, default: Date.now },
+}, { timestamps: true });
+
+//module.exports = mongoose.model('Attempt', attemptSchema);
+module.exports = mongoose.model('Submission', submission_Schema);
+
+

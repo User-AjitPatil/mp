@@ -1,15 +1,21 @@
-//models/Test.js
 const mongoose = require('mongoose');
 
-const questionSchema = new mongoose.Schema({
-    question: { type: String, required: true },
-    options: { type: [String], required: true },
-    correctAnswerIndex: { type: Number, required: true }
-});
-
-const testSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    questions: { type: [questionSchema], required: true },
+const question_Schema = new mongoose.Schema({
+    test_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Test', required: true }, // Ensure 'Test' is capitalized
+    question_text: { type: String, required: true },
+    answer_options: { type: [String], required: true },
+    correct_answer: { type: String, required: true },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Test', testSchema);
+const test_Schema = new mongoose.Schema({
+    title: String,
+    description: String,
+    created_by: { type: mongoose.Schema.Types.ObjectId, ref: 'admin', required: true },
+},{ timestamps: true });
+
+// Create the models
+const Test = mongoose.model('Test', test_Schema);
+const Question = mongoose.model('Question', question_Schema);
+
+// Export both models
+module.exports = { Test, Question };

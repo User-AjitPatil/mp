@@ -21,6 +21,9 @@ import StudentSubjects from './dashboard/StudentSubjects';
 import StudentTopics from './dashboard/StudentTopics';
 import Test from './examsection/StudentTest';
 import Result from './examsection/StudentResult';
+import AddQuestions from './examsection/AddQuestions';
+import TestDetails from './examsection/TestDetails'
+
 function App() {
   const [type, setType] = useState(null);
   return (
@@ -31,9 +34,12 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<SignupForm setType={setType} />} />
         <Route path='/login' element={<LoginForm />} />
-        <Route path='/dashboard' element={type === "student" ? <StudentDashboard /> : <AdminDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/exam' element={type === "student" ? <StudentExamHandler/> : <AdminExamHandler/>} />
+        <Route path="/add-questions/:testId" element={<AddQuestions />} />
+        <Route path="/test-details/:testId" element={<TestDetails />} />
         <Route path='/subjects' element={<Subjects />} />
         <Route path='/studentsdata' element={<StudentsData />} />
         <Route path="/subjects/topics/:subject" element={<TopicPage />} />
