@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
+const LoginForm = ({ setUserType }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('student'); // New state for role
+  const [role, setRole] = useState('student'); // State for role
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setLoading(true);
+    setError(null);
+
     // Define the endpoint based on the role
     const endpoint = role === 'student' 
       ? 'http://localhost:4000/api/v1/student/auth/login' 
@@ -23,27 +27,30 @@ const LoginForm = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-      
-      // Check if the response is ok (status 200)
+
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
 
       const data = await response.json();
-      console.log(data); // Log the response data for debugging
+      console.log(data);
 
       if (data.success) {
-        // Store the token in localStorage
-        localStorage.setItem('token', data.Token); // Assuming the token is in data.Token
+        // Store the token and user role in localStorage
+        localStorage.setItem('token', data.Token); // Store the token
+        localStorage.setItem('userRole', role); // Store the user role
 
-        // Navigate to the appropriate dashboard based on the role
+        setUserType(role); // Set user type in state
         navigate(role === 'student' ? '/student-dashboard' : '/admin-dashboard');
       } else {
-        // Handle error (e.g., display error message)
-        console.error(data.msg);
+        setError(data.msg || 'Login failed');
       }
     } catch (error) {
       console.error("Error during login:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,11 +86,14 @@ const LoginForm = () => {
             required
           />
 
+          {error && <div className="text-red-500 mb-4">{error}</div>}
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className={`w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
@@ -91,7 +101,7 @@ const LoginForm = () => {
           New here? 
           <span 
             className="text-blue-500 cursor-pointer" 
-            onClick={() => {navigate("/signup")}}
+            onClick={() => { navigate("/signup"); }}
           >
             Sign Up
           </span>

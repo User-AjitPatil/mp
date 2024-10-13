@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../dashboard/Sidebar';
 import { FaBars } from 'react-icons/fa';
@@ -15,16 +14,34 @@ const StudentExamHandler = () => {
     };
 
     useEffect(() => {
-        // Mock fetching tests; replace with actual API call
         const fetchTests = async () => {
-            const tests = await fetch('/api/tests'); // replace with your actual API endpoint
-            const { available, completed } = await tests.json();
-            setAvailableTests(available);
-            setCompletedTests(completed);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://localhost:4000/api/v1/student/routes/get-tests', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tests');
+                }
+
+                const data = await response.json();
+                console.log(data); // Log the response for debugging
+
+                // Set available tests based on your needs; for now, assume all are available
+                setAvailableTests(data.tests || []); // Ensure availableTests is set correctly
+
+                // You may want to handle completed tests similarly; adjust based on your logic
+                // setCompletedTests(data.completedTests || []); // Uncomment and adjust if applicable
+
+            } catch (error) {
+                console.error('Error fetching tests:', error);
+                navigate('/login');
+            }
         };
 
         fetchTests();
-    }, []);
+    }, [navigate]);
 
     const startTest = (testId) => {
         if (window.confirm('Are you sure you want to start this test?')) {
@@ -34,35 +51,45 @@ const StudentExamHandler = () => {
 
     return (
         <div className="flex h-screen mt-5">
-            
             <FaBars onClick={toggleSidebar} className="cursor-pointer fixed text-xl text-white ml-1 z-10 hover:text-gray-400" />
             <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
             <div className="flex-1 mt-6 p-6">
                 <h1 className="text-2xl font-bold mb-4">Student Exam Handler</h1>
+
                 <h2 className="text-xl mb-2">Available Tests</h2>
                 <ul className="list-none space-y-3 mb-6">
-                    {availableTests.map(test => (
-                        <li key={test.id} className="bg-gray-100 p-4 rounded shadow-md">
-                            <div className="flex justify-between">
-                                <span>{test.name}</span>
-                                <button onClick={() => startTest(test.id)} className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">Start Test</button>
-                            </div>
-                        </li>
-                    ))}
+                    {availableTests.length > 0 ? (
+                        availableTests.map(test => (
+                            <li key={test._id} className="bg-gray-100 p-4 rounded shadow-md flex justify-between items-center">
+                                <span>{test.title}</span>
+                                <button 
+                                    onClick={() => startTest(test._id)} 
+                                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
+                                >
+                                    Start Test
+                                </button>
+                            </li>
+                        ))
+                    ) : (
+                        <li className="bg-gray-100 p-4 rounded shadow-md">No available tests</li>
+                    )}
                 </ul>
 
                 <h2 className="text-xl mb-2">Completed Tests</h2>
                 <ul className="list-none space-y-3">
-                    {completedTests.map(test => (
-                        <li key={test.id} className="bg-gray-200 p-4 rounded shadow-md">
-                            <span>{test.name}</span>
-                            <button onClick={() => navigate(`/result/${test.id}`)} className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700">View Result</button>
-                        </li>
-                    ))}
+                    {completedTests.length > 0 ? (
+                        completedTests.map(test => (
+                            <li key={test._id} className="bg-gray-200 p-4 rounded shadow-md flex justify-between items-center">
+                                <span>{test.title}</span>
+                                <span className="font-semibold">Score: {test.score} / {test.totalMarks}</span>
+                            </li>
+                        ))
+                    ) : (
+                        <li className="bg-gray-200 p-4 rounded shadow-md">No completed tests</li>
+                    )}
                 </ul>
             </div>
-            </div>
-            
+        </div>
     );
 };
 

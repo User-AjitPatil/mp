@@ -12,12 +12,12 @@ const SignupForm = ({ setType }) => {
         password: "",
         confirmPassword: "",
         userType: "student",
-        PRN: "", // Added PRN number field
+        PRN: "",
     });
 
-    const [errors, setErrors] = useState({}); // To hold validation error messages
-    const [showPassword, setShowPassword] = useState(false); // State to control password visibility
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to control confirm password visibility
+    const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,32 +25,26 @@ const SignupForm = ({ setType }) => {
     };
 
     const validateMobileNo = (Mobile_NO) => {
-        const regex = /^\+?\d{10,15}$/; // Adjust length as necessary
+        const regex = /^\+?\d{10,15}$/;
         return regex.test(Mobile_NO);
     };
 
     const validatePassword = (password) => {
-        return password.length >= 6; // Only check for a minimum length of 6 characters
+        return password.length >= 6;
     };
 
     const handleSignup = async () => {
         let formErrors = {};
 
-        // Mobile number validation
         if (!validateMobileNo(formData.Mobile_NO)) {
             formErrors.Mobile_NO = "Invalid mobile number format.";
         }
-
-        // Password validation
         if (!validatePassword(formData.password)) {
             formErrors.password = "Password must be at least 6 characters long.";
         }
-
         if (formData.password !== formData.confirmPassword) {
             formErrors.confirmPassword = "Passwords do not match.";
         }
-
-        // PRN number validation for students
         if (formData.userType === "student" && !formData.PRN) {
             formErrors.PRN = "PRN number is required for students.";
         }
@@ -60,12 +54,13 @@ const SignupForm = ({ setType }) => {
             return;
         }
 
-        // If there are no errors, proceed with API submission
         const endpoint = formData.userType === "student" 
             ? "http://localhost:4000/api/v1/student/auth/signup" 
             : "http://localhost:4000/api/v1/admin/auth/signup";
 
         try {
+            console.log("Form Data:", formData); // Add this line before the fetch call
+
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -79,9 +74,10 @@ const SignupForm = ({ setType }) => {
                 throw new Error("Signup failed.");
             }
 
-            setType(formData.userType);
+            if (setType) {
+                setType(formData.userType);
+            }
             navigate("/login");
-            console.log("Form Submitted", data);
         } catch (error) {
             console.error("Error:", error);
             setErrors({ submit: "Signup failed. Please try again." });
@@ -99,7 +95,7 @@ const SignupForm = ({ setType }) => {
                             <input
                                 type="text"
                                 name={field}
-                                placeholder={field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} // format field name
+                                placeholder={field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                                 value={formData[field]}
                                 onChange={handleChange}
                                 className={`w-full p-2 border rounded ${errors[field] ? 'border-red-500' : ''}`}
@@ -112,7 +108,7 @@ const SignupForm = ({ setType }) => {
                     {/* Password Input */}
                     <div className="mb-4">
                         <input
-                            type={showPassword ? "text" : "password"} // Toggle password visibility
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="Password"
                             value={formData.password}
@@ -127,7 +123,7 @@ const SignupForm = ({ setType }) => {
                     {/* Confirm Password Input */}
                     <div className="mb-4">
                         <input
-                            type={showConfirmPassword ? "text" : "password"} // Toggle confirm password visibility
+                            type={showConfirmPassword ? "text" : "password"}
                             name="confirmPassword"
                             placeholder="Confirm Password"
                             value={formData.confirmPassword}
@@ -139,7 +135,7 @@ const SignupForm = ({ setType }) => {
                         {errors.confirmPassword && <div className="text-red-500">{errors.confirmPassword}</div>}
                     </div>
 
-                    {/* PRN Number Input (conditional rendering) */}
+                    {/* PRN Number Input */}
                     {formData.userType === "student" && (
                         <div className="mb-4">
                             <input
@@ -171,8 +167,8 @@ const SignupForm = ({ setType }) => {
                     </div>
                     <div className="mb-4">
                         <button 
-                            type="button" // Keep as button type
-                            onClick={handleSignup} // OnClick handler
+                            type="button"
+                            onClick={handleSignup}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
                             Signup

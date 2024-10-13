@@ -17,7 +17,8 @@ const AdminDashboard = () => {
                 onClick={toggleSidebar} 
                 className="cursor-pointer fixed text-xl text-white ml-1 z-10 hover:text-gray-400" 
             />
-            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+            <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} role="admin" />
+
             <div className="flex-1 p-8">
                 <h1 className="text-3xl mt-2 text-center font-bold text-gray-800 mb-6">Admin Dashboard</h1>
                 

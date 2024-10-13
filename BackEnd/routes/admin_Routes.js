@@ -2,7 +2,7 @@ const Router = require('express').Router();
 // const { test, question } = require('../db'); // Import the necessary models
 const authMiddleware = require('../middlewears/auth_Middleware'); // Ensure this middleware checks for admin role
 const { create_Test } = require('../controllers/create_Test'); 
-const { get_Test } = require('../controllers/get_Test');
+const { get_Test } = require('../controllers/get_Test_Admin');
 const { add_Questions } = require('../controllers/add_Questions');
 const { get_Questions } = require('../controllers/get_Questions');
 
