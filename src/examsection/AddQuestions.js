@@ -34,7 +34,7 @@ const AddQuestions = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await axios.post(`http://localhost:4000/api/v1/admin/routes/tests/${testId}/add-questions`, {
+            const response = await axios.post(`http://localhost:5000/api/v1/admin/routes/tests/${testId}/add-questions`, {
                 questions,
             }, {
                 headers: {
@@ -44,7 +44,7 @@ const AddQuestions = () => {
 
             if (response.status === 201) {
                 console.log('Questions added:', response.data);
-                navigate('/exam'); // Redirect after successful submission
+                navigate('/admin-exams'); // Redirect after successful submission
             } else {
                 throw new Error('Failed to add questions');
             }

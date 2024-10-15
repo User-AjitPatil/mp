@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../dashboard/Sidebar';
 import { FaBars } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const StudentExamHandler = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [availableTests, setAvailableTests] = useState([]);
     const [completedTests, setCompletedTests] = useState([]);
+    const [isTestStarted, setIsTestStarted] = useState(false);
     const navigate = useNavigate();
 
     const toggleSidebar = () => {
@@ -17,7 +21,7 @@ const StudentExamHandler = () => {
         const fetchTests = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:4000/api/v1/student/routes/get-tests', {
+                const response = await fetch('http://localhost:5000/api/v1/student/routes/get-tests', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -42,15 +46,39 @@ const StudentExamHandler = () => {
 
         fetchTests();
     }, [navigate]);
+    const handleStartTest = async () => {
+        setIsTestStarted(true);
+        toast.info("Test started! Please do not switch tabs.");
 
+        try {
+            const response = await axios.post('http://localhost:4000/api/start_proctoring', {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.status === 200) {
+                setIsTestStarted(true);
+                toast.info("Security features are now active. Please do not switch tabs.");
+            } else {
+                toast.error(`Error starting test: ${response.data.message}`);
+            }
+        } catch (error) {
+            const errorMessage = error.response ? error.response.data.message : error.message;
+            toast.error(`An error occurred: ${errorMessage}`);
+        }
+    };
     const startTest = (testId) => {
         if (window.confirm('Are you sure you want to start this test?')) {
             navigate(`/test/${testId}`);
+            handleStartTest();
         }
+
     };
 
     return (
         <div className="flex h-screen mt-5">
+            <ToastContainer/>
             <FaBars onClick={toggleSidebar} className="cursor-pointer fixed text-xl text-white ml-1 z-10 hover:text-gray-400" />
             <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
             <div className="flex-1 mt-6 p-6">

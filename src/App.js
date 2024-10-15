@@ -47,3 +47,8 @@ function App() {
 }
 
 export default App;
+
+
+//model intigrating
+//tab count give to backend
+//server.py to server.js

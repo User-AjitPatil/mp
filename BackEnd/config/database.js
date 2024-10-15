@@ -9,8 +9,7 @@ const dbConnect = () => {
 	// Connecting to the database using the provided URL from the environment variables
 	mongoose
 		.connect(process.env.DATABASE_URL, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
+
 		})
 		// If the connection is successful, log a success message
 		.then(() => console.log("DB CONNECTION SUCCESS"))
