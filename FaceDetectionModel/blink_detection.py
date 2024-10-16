@@ -3,7 +3,8 @@ import dlib
 from math import hypot
 import cv2
 
-shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+# shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+shapePredictorModel = 'C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/shape_predictor_model/shape_predictor_68_face_landmarks.dat'
 shapePredictor = dlib.shape_predictor(shapePredictorModel)
 
 

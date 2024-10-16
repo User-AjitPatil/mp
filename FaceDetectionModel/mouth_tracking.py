@@ -2,7 +2,8 @@ import dlib
 import cv2
 from math import hypot
 
-predictorModel = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+# predictorModel = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+predictorModel = 'C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/shape_predictor_model/shape_predictor_68_face_landmarks.dat'
 predictor = dlib.shape_predictor(predictorModel)
 
 def calcDistance(pointA, pointB):

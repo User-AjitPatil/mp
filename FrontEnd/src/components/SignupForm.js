@@ -60,7 +60,7 @@ const SignupForm = ({ setType }) => {
 
         try {
             console.log("Form Data:", formData); // Add this line before the fetch call
-
+            console.log("formData.userType=>",formData.userType);
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -70,6 +70,7 @@ const SignupForm = ({ setType }) => {
             });
 
             const data = await response.json();
+            console.log("data=>",data);
             if (!data.success) {
                 throw new Error("Signup failed.");
             }

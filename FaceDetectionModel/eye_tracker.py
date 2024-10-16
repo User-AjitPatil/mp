@@ -3,7 +3,8 @@ import cv2
 import numpy as np
 
 
-shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+# shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+shapePredictorModel = 'C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/shape_predictor_model/shape_predictor_68_face_landmarks.dat'
 shapePredictor = dlib.shape_predictor(shapePredictorModel)
 
 

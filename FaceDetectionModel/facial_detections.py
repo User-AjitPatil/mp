@@ -4,7 +4,8 @@ import dlib
 import cv2
 from imutils import face_utils
 
-shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+# shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+shapePredictorModel = 'C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/shape_predictor_model/shape_predictor_68_face_landmarks.dat'
 shapePredictor = dlib.shape_predictor(shapePredictorModel)
 
 

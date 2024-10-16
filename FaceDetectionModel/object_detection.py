@@ -3,12 +3,13 @@ import numpy as np
 import time
 
 #net has the YOLO loaded
-net = cv2.dnn.readNet("object_detection_model/weights/yolov3-tiny.weights", "object_detection_model/config/yolov3-tiny.cfg")
-
+# net = cv2.dnn.readNet("object_detection_model/weights/yolov3-tiny.weights", "object_detection_model/config/yolov3-tiny.cfg")
+net = cv2.dnn.readNet("C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/object_detection_model/weights/yolov3-tiny.weights", "C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/object_detection_model/config/yolov3-tiny.cfg")
 #classes that we have to detect using Object Detection Model
 label_classes = []
 
-with open("object_detection_model/objectLabels/coco.names","r") as file:
+# with open("object_detection_model/objectLabels/coco.names","r") as file:
+with open("C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/object_detection_model/objectLabels/coco.names","r") as file:
     label_classes = [name.strip() for name in file.readlines()]
 
 layer_names = net.getLayerNames()

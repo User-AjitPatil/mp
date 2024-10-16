@@ -95,7 +95,8 @@ camera_matrix = np.array(
     [0, 0, 1]], dtype = "double"
 )
 
-shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+# shapePredictorModel  = 'shape_predictor_model/shape_predictor_68_face_landmarks.dat'
+shapePredictorModel = 'C:/Users/ajitp/OneDrive/Documents/GitHub/mp/FaceDetectionModel/shape_predictor_model/shape_predictor_68_face_landmarks.dat'
 shapePredictor = dlib.shape_predictor(shapePredictorModel)
 
 # while True:
