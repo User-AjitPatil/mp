@@ -1,6 +1,5 @@
-opencv-python==4.5.5.64
-opencv-python-headless==4.5.5.64
-dlib==19.22.1
-numpy==1.24.4  # Updated for Python 3.11 compatibility
+dlib==19.24.0 --only-binary :all:
+opencv-python==4.8.0.76
+numpy==1.24.4
 imutils==0.5.4
 requests==2.31.0
