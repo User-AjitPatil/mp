@@ -1,0 +1,10 @@
+opencv-python==4.5.5.64
+opencv-python-headless==4.5.5.64
+dlib==19.22.1
+numpy==1.21.2
+librosa==0.8.1
+tensorflow==2.6.0  # or pytorch if you prefer using PyTorch
+scikit-learn==0.24.2
+matplotlib==3.4.3
+soundfile==0.10.3
+scipy==1.7.1
