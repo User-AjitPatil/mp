@@ -5,13 +5,16 @@ import subprocess
 import os
 import signal
 import logging
-
+from dotenv import load_dotenv
+load_dotenv()
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
 # MongoDB connection
-DATABASE_URL = "mongodb+srv://ajitpatil7805:QdpB2XTMg2Rle5FR@project-0.hdzh7.mongodb.net/MyDatabase"
+DATABASE_URL = os.getenv('DATABASE_URL')
+PORT = os.getenv('PORT') or 4001
+# DATABASE_URL = "mongodb+srv://ajitpatil7805:QdpB2XTMg2Rle5FR@project-0.hdzh7.mongodb.net/MyDatabase"
 client = MongoClient(DATABASE_URL)
 db = client['MyDatabase']
 collection = db['results']
@@ -89,5 +92,5 @@ def tab_switch_count():
         return jsonify({'status': 'error', 'message': 'No data received'}), 400
     
 if __name__ == '__main__':
-    app.run(port=4000)  # Set the port to 4000
+    app.run(port=PORT)  # Set the port to 4000
 

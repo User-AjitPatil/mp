@@ -8,3 +8,4 @@ scikit-learn==0.24.2
 matplotlib==3.4.3
 soundfile==0.10.3
 scipy==1.7.1
+python-dotenv==0.19.2  # For managing .env files
