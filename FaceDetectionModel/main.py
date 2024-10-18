@@ -160,7 +160,7 @@
 # proctoringAlgo()
 
 
-import cv2
+import cv2 
 import time
 import winsound
 import numpy as np
@@ -173,6 +173,8 @@ from mouth_tracking import mouthTrack
 from object_detection import detectObject
 from eye_tracker import gazeDetection
 from head_pose_estimation import head_pose_detection
+import sys
+print(sys.executable)
 
 # Global variables
 data_record = []  # This will hold all records
@@ -185,7 +187,7 @@ duration = 1000
 
 # Function to send results to the admin
 def send_results_to_admin(results):
-    api_url = 'http://localhost:4000/api/send_results'  # Ensure this matches your Flask server's URL
+    api_url = 'http://localhost:8000/api/send_results'  # Ensure this matches your Flask server's URL
     headers = {'Content-Type': 'application/json'}
 
     # Send results as JSON

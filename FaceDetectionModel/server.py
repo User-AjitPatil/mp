@@ -6,6 +6,9 @@ import os
 import signal
 import logging
 from dotenv import load_dotenv
+import sys
+print(sys.executable)
+
 load_dotenv()
 # Initialize Flask app
 app = Flask(__name__)
@@ -32,6 +35,25 @@ def start_proctoring():
         return jsonify({"status": "success", "message": "Proctoring started!"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+# @app.route('/api/start_proctoring', methods=['POST'])
+# def start_proctoring():
+#     global proctoring_process
+#     try:
+#         # Start the proctoring script
+#         proctoring_process = subprocess.Popen(
+#             ['python', './main.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+#         )
+#         stdout, stderr = proctoring_process.communicate()
+        
+#         if stdout:
+#             logging.info(f"Proctoring started successfully: {stdout.decode()}")
+#         if stderr:
+#             logging.error(f"Proctoring error: {stderr.decode()}")
+        
+#         return jsonify({"status": "success", "message": "Proctoring started!"}), 200
+#     except Exception as e:
+#         return jsonify({"status": "error", "message": str(e)}), 500
+
 
 @app.route('/api/stop_proctoring', methods=['POST'])
 def stop_proctoring():
@@ -95,5 +117,5 @@ def home():
     return "Hello, World!"  
     
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=PORT)  # Set the port to 4000
+    app.run(port=PORT)  # Set the port to 4000
 
