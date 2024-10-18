@@ -51,7 +51,7 @@ const StudentExamHandler = () => {
         toast.info("Test started! Please do not switch tabs.");
 
         try {
-            const response = await axios.post('http://localhost:4000/api/start_proctoring', {}, {
+            const response = await axios.post('http://localhost:8000/api/start_proctoring', {}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -60,6 +60,7 @@ const StudentExamHandler = () => {
             if (response.status === 200) {
                 setIsTestStarted(true);
                 toast.info("Security features are now active. Please do not switch tabs.");
+                console.log("Security features are now active. Please do not switch tabs.");
             } else {
                 toast.error(`Error starting test: ${response.data.message}`);
             }
