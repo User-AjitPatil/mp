@@ -92,5 +92,5 @@ def tab_switch_count():
         return jsonify({'status': 'error', 'message': 'No data received'}), 400
     
 if __name__ == '__main__':
-    app.run(port=PORT)  # Set the port to 4000
+    app.run(host="0.0.0.0",port=PORT)  # Set the port to 4000
 
