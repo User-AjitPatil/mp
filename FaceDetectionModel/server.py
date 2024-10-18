@@ -90,6 +90,9 @@ def tab_switch_count():
             return jsonify({'status': 'error', 'message': 'Data must be a list or dictionary'}), 400
     else:
         return jsonify({'status': 'error', 'message': 'No data received'}), 400
+@app.route('/')
+def home():
+    return "Hello, World!"  
     
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=PORT)  # Set the port to 4000
