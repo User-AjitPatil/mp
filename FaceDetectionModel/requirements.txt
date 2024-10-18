@@ -1,6 +1,6 @@
 # # requirements.txt
 cmake
-dlib-19.24.1-cp311-cp311-win_amd64.whl
+dlib==19.24.1
 opencv-python==4.8.0.76
 scipy
 pybind11
