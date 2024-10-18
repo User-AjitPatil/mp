@@ -1,6 +1,6 @@
 # # requirements.txt
 # cmake
-cmake=3.31.0-rc1
+cmake=3.31.0
 dlib==19.24.1
 opencv-python==4.8.0.76
 scipy
