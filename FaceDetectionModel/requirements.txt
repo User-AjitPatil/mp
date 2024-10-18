@@ -1,26 +1,14 @@
-# # requirements.txt
-# cmake
-# dlib==19.24.6
-# opencv-python==4.8.0.76
-# scipy
-# pybind11
-# numpy==1.24.0
-# imutils==0.5.4
-# requests==2.31.0
-# pymongo==4.3.3
-# Flask==2.3.3
-# flask-cors==3.0.10
-# python-dotenv==1.0.0
 # requirements.txt
 cmake
-dlib
-opencv-python
+dlib==19.24.6
+opencv-python==4.8.0.76
 scipy
 pybind11
-numpy
-imutils
-requests
-pymongo
-Flask
-flask-cors
-python-dotenv
+numpy==1.24.0
+imutils==0.5.4
+requests==2.31.0
+pymongo==4.3.3
+Flask==2.3.3
+flask-cors==3.0.10
+python-dotenv==1.0.0
+requirements.txt
