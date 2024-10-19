@@ -12,7 +12,10 @@ print(sys.executable)
 load_dotenv()
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+# Enable CORS for specific origins
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "https://mp-chi.vercel.app"]}})
+
 
 # MongoDB connection
 DATABASE_URL = os.getenv('DATABASE_URL')
