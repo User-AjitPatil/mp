@@ -32,7 +32,7 @@ const Test = () => {
         const fetchQuestions = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:5000/api/v1/student/routes/test/${testId}/get-Questions`, {
+                const response = await axios.get(`https://mp-4-cr8p.onrender.com/api/v1/student/routes/test/${testId}/get-Questions`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -72,7 +72,7 @@ const Test = () => {
         try {
              
             // Stop proctoring first
-            await axios.post('http://localhost:8000/api/stop_proctoring', {}, {
+            await axios.post('https://mp-1-7uzc.onrender.com/api/stop_proctoring', {}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -83,7 +83,7 @@ const Test = () => {
         }
         try {
             const response = await axios.post(
-                `http://localhost:5000/api/v1/student/routes/tests/${testId}/submit`,
+                `https://mp-4-cr8p.onrender.com/api/v1/student/routes/tests/${testId}/submit`,
                 { answers: formattedAnswers }, // Send formatted answers
                 {
                     headers: { Authorization: `Bearer ${token}` }
@@ -114,7 +114,7 @@ const Test = () => {
 
     const logTabSwitch = async (switchCount) => {
         try {
-            await axios.post('http://localhost:8000/api/tab_switch_count', {
+            await axios.post('https://mp-1-7uzc.onrender.com/api/tab_switch_count', {
                 count: switchCount // Use the correct key here
             }, {
                 headers: {

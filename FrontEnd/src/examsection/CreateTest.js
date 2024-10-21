@@ -23,7 +23,7 @@ const CreateTest = () => {
         const token = localStorage.getItem('token');
     
         try {
-            const response = await axios.post('http://localhost:5000/api/v1/admin/routes/create-tests', testData, {
+            const response = await axios.post('https://mp-4-cr8p.onrender.com/api/v1/admin/routes/create-tests', testData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

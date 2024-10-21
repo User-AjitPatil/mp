@@ -17,7 +17,7 @@ const AdminExamHandler = () => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const testResponse = await fetch('http://localhost:5000/api/v1/admin/routes/get-tests', {
+                const testResponse = await fetch('https://mp-4-cr8p.onrender.com/api/v1/admin/routes/get-tests', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

@@ -21,7 +21,7 @@ const StudentExamHandler = () => {
         const fetchTests = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch('http://localhost:5000/api/v1/student/routes/get-tests', {
+                const response = await fetch('https://mp-4-cr8p.onrender.com/api/v1/student/routes/get-tests', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -51,7 +51,7 @@ const StudentExamHandler = () => {
         toast.info("Test started! Please do not switch tabs.");
 
         try {
-            const response = await axios.post('http://localhost:8000/api/start_proctoring', {}, {
+            const response = await axios.post('https://mp-1-7uzc.onrender.com/api/start_proctoring', {}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
