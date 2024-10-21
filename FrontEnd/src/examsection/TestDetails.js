@@ -12,7 +12,7 @@ const TestDetails = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:5000/api/v1/admin/routes/tests/${testId}/get-questions`, {
+            const response = await axios.get(`https://mp-4-cr8p.onrender.com/api/v1/admin/routes/tests/${testId}/get-questions`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (response.status === 200) {
@@ -22,7 +22,7 @@ const TestDetails = () => {
 
         const fetchResponses = async () => {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://localhost:5000/api/v1/admin/routes/tests/${testId}/get-responses`, {
+            const response = await axios.get(`https://mp-4-cr8p.onrender.com/api/v1/admin/routes/tests/${testId}/get-responses`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (response.status === 200) {

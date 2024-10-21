@@ -34,7 +34,7 @@ const AddQuestions = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await axios.post(`http://localhost:5000/api/v1/admin/routes/tests/${testId}/add-questions`, {
+            const response = await axios.post(`https://mp-4-cr8p.onrender.com/api/v1/admin/routes/tests/${testId}/add-questions`, {
                 questions,
             }, {
                 headers: {

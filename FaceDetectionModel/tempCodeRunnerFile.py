@@ -26,7 +26,7 @@ duration = 1000
 
 # Function to send results to the admin
 def send_results_to_admin(results):
-    api_url = 'http://localhost:4000/api/send_results'  # Ensure this matches your Flask server's URL
+    api_url = 'https://mp-1-7uzc.onrender.com/api/send_results'  # Ensure this matches your Flask server's URL
     headers = {'Content-Type': 'application/json'}
 
     # Send results as JSON

@@ -55,8 +55,8 @@ const SignupForm = ({ setType }) => {
         }
 
         const endpoint = formData.userType === "student" 
-            ? "http://localhost:5000/api/v1/student/auth/signup" 
-            : "http://localhost:5000/api/v1/admin/auth/signup";
+            ? "https://mp-4-cr8p.onrender.com/api/v1/student/auth/signup" 
+            : "https://mp-4-cr8p.onrender.com/api/v1/admin/auth/signup";
 
         try {
             console.log("Form Data:", formData); // Add this line before the fetch call

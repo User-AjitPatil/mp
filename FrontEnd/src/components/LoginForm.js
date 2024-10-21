@@ -16,8 +16,8 @@ const LoginForm = ({ setUserType }) => {
 
     // Define the endpoint based on the role
     const endpoint = role === 'student' 
-      ? 'http://localhost:5000/api/v1/student/auth/login' 
-      : 'http://localhost:5000/api/v1/admin/auth/login';
+      ? 'https://mp-4-cr8p.onrender.com/api/v1/student/auth/login' 
+      : 'https://mp-4-cr8p.onrender.com/api/v1/admin/auth/login';
 
     try {
       const response = await fetch(endpoint, {
