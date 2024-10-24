@@ -11,12 +11,12 @@ const StudentExamHandler = () => {
     const [availableTests, setAvailableTests] = useState([]);
     const [completedTests, setCompletedTests] = useState([]);
     const [isTestStarted, setIsTestStarted] = useState(false);
+    
     const navigate = useNavigate();
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
-
     useEffect(() => {
         const fetchTests = async () => {
             try {
@@ -42,6 +42,29 @@ const StudentExamHandler = () => {
                 console.error('Error fetching tests:', error);
                 navigate('/login');
             }
+            // try {
+            //     const token = localStorage.getItem('token');
+            //     const response = await fetch('https://localhost:5000/api/v1/student/routes/completed-Tests', {
+            //         headers: { Authorization: `Bearer ${token}` }
+            //     });
+
+            //     if (!response.ok) {
+            //         throw new Error('Failed to fetch complemented tests');
+            //     }
+
+            //     const data = await response.json();
+            //     console.log(data); // Log the response for debugging
+
+            //     // Set available tests based on your needs; for now, assume all are available
+            //     setCompletedTests(data.tests || []); // Ensure availableTests is set correctly
+
+            //     // You may want to handle completed tests similarly; adjust based on your logic
+            //     // setCompletedTests(data.completedTests || []); // Uncomment and adjust if applicable
+
+            // } catch (error) {
+            //     console.error('Error in fetching  the completed tests:', error);
+            //     navigate('/login');
+            // }
         };
 
         fetchTests();
