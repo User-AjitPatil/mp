@@ -17,7 +17,7 @@ import StudentTopics from './dashboard/StudentTopics';
 import Test from './examsection/StudentTest';
 import AddQuestions from './examsection/AddQuestions';
 import TestDetails from './examsection/TestDetails';
-
+import AdminResults from './dashboard/AdminResults';
 function App() {
   const [userType, setUserType] = useState(null); // Track user type
 
@@ -33,6 +33,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path="/student-exams" element={<StudentExamHandler />} />
         <Route path="/admin-exams" element={<AdminExamHandler />} />
+        <Route path="/admin-results" element={<AdminResults />} />
         <Route path="/add-questions/:testId" element={<AddQuestions />} />
         <Route path="/test-details/:testId" element={<TestDetails />} />
         <Route path='/subjects' element={<Subjects />} />

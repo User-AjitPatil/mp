@@ -72,7 +72,7 @@ const Test = () => {
         try {
              
             // Stop proctoring first
-            await axios.post('https://mp-1-7uzc.onrender.com/api/stop_proctoring', {}, {
+            await axios.post('http://localhost:8000/api/stop_proctoring', {}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -114,7 +114,7 @@ const Test = () => {
 
     const logTabSwitch = async (switchCount) => {
         try {
-            await axios.post('https://mp-1-7uzc.onrender.com/api/tab_switch_count', {
+            await axios.post('http://localhost:8000/api/tab_switch_count', {
                 count: switchCount // Use the correct key here
             }, {
                 headers: {
