@@ -33,6 +33,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path="/student-exams" element={<StudentExamHandler />} />
         <Route path="/admin-exams" element={<AdminExamHandler />} />
+        <Route path="/admin-results" element={<AdminResults />} />
         <Route path="/add-questions/:testId" element={<AddQuestions />} />
         <Route path="/test-details/:testId" element={<TestDetails />} />
         <Route path='/subjects' element={<Subjects />} />
