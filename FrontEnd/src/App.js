@@ -17,7 +17,7 @@ import StudentTopics from './dashboard/StudentTopics';
 import Test from './examsection/StudentTest';
 import AddQuestions from './examsection/AddQuestions';
 import TestDetails from './examsection/TestDetails';
-
+import AdminResults from './dashboard/AdminResults';
 function App() {
   const [userType, setUserType] = useState(null); // Track user type
 

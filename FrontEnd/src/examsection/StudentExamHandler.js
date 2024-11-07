@@ -74,7 +74,7 @@ const StudentExamHandler = () => {
         toast.info("Test started! Please do not switch tabs.");
 
         try {
-            const response = await axios.post('https://mp-1-7uzc.onrender.com/api/start_proctoring', {}, {
+            const response = await axios.post('http://localhost:8000/api/start_proctoring', {}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
